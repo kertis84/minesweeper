@@ -7,6 +7,7 @@ interface Props {
   state: GameState
   flags: number
   settings: GameSettings
+  face_shocked: boolean
 }
 
 const props = defineProps<Props>()
@@ -135,7 +136,8 @@ const onClickResetGame = () => {
     class="center"
     :class="{
       face_pressed: pressed,
-      face_unpressed: !pressed && (state === GameState.ready || state === GameState.run),
+      face_shocked: face_shocked && (state === GameState.run || state === GameState.ready),
+      face_unpressed: !pressed && !face_shocked && (state === GameState.ready || state === GameState.run),
       face_lose: !pressed && state === GameState.lose,
       face_win: !pressed && state === GameState.win
     }"
@@ -148,6 +150,10 @@ const onClickResetGame = () => {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.face_shocked {
+  background-image: url(/resources/face_shocked.svg);
+  background-size: 100% 100%;
 }
 .face_unpressed {
   background-image: url(/resources/face_unpressed.svg);
