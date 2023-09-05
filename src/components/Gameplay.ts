@@ -31,6 +31,7 @@ export default class Gameplay {
         if (!this.matrix[y][x].flagged && !this.matrix[y][x].opened) {
             this.openEmptyArea(x, y)
             if (this.matrix[y][x].value === 10) {
+                this.matrix[y][x].value = 9
                 this.gameState = GameState.lose
             }
             else if (this.countClosedCells() === this.settings.mines) {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GameSettings from './components/GameSettings'
+import GameSettings, { scales } from './components/GameSettings'
 import GameHeader from './components/GameHeader.vue'
 import GameCell from './components/GameCell.vue'
 import { ref, watch } from 'vue'
@@ -76,33 +76,39 @@ watch(game.value, () => {
   if (game.value.gameState === GameState.lose) {
     game.value.matrix.forEach((row) => {
       row.forEach((cell) => {
-        if (cell.value === 10 && !cell.flagged){
+        if (cell.value === 10 && !cell.flagged) {
           cell.opened = true
           cell.flagged = false
-        }
-        else if (cell.value !== 10 && cell.flagged){
+        } else if (cell.value !== 10 && cell.flagged) {
           cell.value = 11
           cell.opened = true
           cell.flagged = false
         }
       })
     })
-  }
-  else if (game.value.gameState === GameState.win) {
+  } else if (game.value.gameState === GameState.win) {
     game.value.flags = 0
     game.value.matrix.forEach((row) => {
-      row.forEach((cell) => (cell.value === 10 && (cell.flagged = true)))
+      row.forEach((cell) => cell.value === 10 && (cell.flagged = true))
     })
   }
 })
 </script>
 
 <template>
-  <div class="my-3 mx-auto">
-    <span class="mx-2 menu" @click="startBeginnerGame">Новичок</span>
-    <span class="mx-2 menu" @click="startAdvancedGame">Любитель</span>
-    <span class="mx-2 menu" @click="startProfessionalGame">Профессионал</span>
-    <span class="mx-2 menu" @click="onClickCustomSettings">Настроить</span>
+  <div
+    class="my-3 mx-auto"
+    style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem"
+  >
+    <div class="mx-2 menu my-auto" @click="startBeginnerGame">Новичок</div>
+    <div class="mx-2 menu my-auto" @click="startAdvancedGame">Любитель</div>
+    <div class="mx-2 menu my-auto" @click="startProfessionalGame">Профессионал</div>
+    <div class="mx-2 menu my-auto" @click="onClickCustomSettings">Настроить</div>
+    <div class="mx-2 my-auto">
+      <select class="scale" v-model="settings.cell_size">
+        <option v-for="scale in scales" :key="scale" :value="scale">{{ scale }} px</option>
+      </select>
+    </div>
   </div>
   <div v-if="is_custom" class="mb-3 mx-auto">
     <label for="height">Высота</label>
@@ -134,6 +140,7 @@ watch(game.value, () => {
     />
     <button class="btn ml-2" @click="startCustomSettingsGame">Применить</button>
   </div>
+
   <div class="container">
     <!-- wrapper header line -->
     <div
@@ -312,6 +319,15 @@ watch(game.value, () => {
   font-weight: 600;
   text-decoration: underline;
 }
+.scale {
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
 .btn {
   display: inline-block;
   outline: none;
@@ -354,6 +370,10 @@ watch(game.value, () => {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .copyright {
   position: fixed;
