@@ -61,9 +61,6 @@ export default class Gameplay {
     }
 
     openEmptyArea(x: number, y: number) {
-        if (this.matrix[y][x].opened)
-            return
-
         this.matrix[y][x].opened = true
         if (this.matrix[y][x].flagged) {
             this.matrix[y][x].flagged = false
@@ -71,7 +68,7 @@ export default class Gameplay {
         }
 
         if (this.matrix[y][x].value === 0) {
-            this.walkAroundCell(x, y, (x0, y0) => this.openEmptyArea(x0, y0))
+            this.walkAroundCell(x, y, (x0, y0) => !this.matrix[y0][x0].opened && this.openEmptyArea(x0, y0))
         }
     }
 
@@ -91,9 +88,7 @@ export default class Gameplay {
 
             if (cell.value < 10) {
                 this.matrix[y][x].value = 10
-                this.walkAroundCell(x, y, (x0, y0) => {
-                    this.matrix[y0][x0].value < 10 && this.matrix[y0][x0].value++
-                })
+                this.walkAroundCell(x, y, (x0, y0) => this.matrix[y0][x0].value < 10 && this.matrix[y0][x0].value++)
                 count--
             }
         }

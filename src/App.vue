@@ -2,8 +2,8 @@
 import GameSettings from './components/GameSettings'
 import GameHeader from './components/GameHeader.vue'
 import GameCell from './components/GameCell.vue'
-import { ref } from 'vue'
-import Gameplay from './components/Gameplay'
+import { ref, watch } from 'vue'
+import Gameplay, { GameState } from './components/Gameplay'
 
 interface CustomSettings {
   height: number
@@ -70,6 +70,31 @@ const onChangeCustomSettings = (e: Event) => {
   customSettings.value = { ...customSettings.value, [target.id]: value }
   target.value = value.toString()
 }
+
+// вскрыть поле в конце игры
+watch(game.value, () => {
+  if (game.value.gameState === GameState.lose) {
+    game.value.matrix.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.value === 10 && !cell.flagged){
+          cell.opened = true
+          cell.flagged = false
+        }
+        else if (cell.value !== 10 && cell.flagged){
+          cell.value = 11
+          cell.opened = true
+          cell.flagged = false
+        }
+      })
+    })
+  }
+  else if (game.value.gameState === GameState.win) {
+    game.value.flags = 0
+    game.value.matrix.forEach((row) => {
+      row.forEach((cell) => (cell.value === 10 && (cell.flagged = true)))
+    })
+  }
+})
 </script>
 
 <template>
@@ -86,7 +111,7 @@ const onChangeCustomSettings = (e: Event) => {
       type="number"
       class="mx-2 settings-input"
       @change="onChangeCustomSettings"
-      @keyup.enter ="startCustomSettingsGame"
+      @keyup.enter="startCustomSettingsGame"
       :value="customSettings.height"
     />
     <label for="width" class="ml-2">Ширина</label>
@@ -95,7 +120,7 @@ const onChangeCustomSettings = (e: Event) => {
       type="number"
       class="mx-2 settings-input"
       @change="onChangeCustomSettings"
-      @keyup.enter ="startCustomSettingsGame"
+      @keyup.enter="startCustomSettingsGame"
       :value="customSettings.width"
     />
     <label for="mines" class="ml-2">Мины</label>
@@ -104,7 +129,7 @@ const onChangeCustomSettings = (e: Event) => {
       type="number"
       class="mx-2 settings-input"
       @change="onChangeCustomSettings"
-      @keyup.enter ="startCustomSettingsGame"
+      @keyup.enter="startCustomSettingsGame"
       :value="customSettings.mines"
     />
     <button class="btn ml-2" @click="startCustomSettingsGame">Применить</button>
