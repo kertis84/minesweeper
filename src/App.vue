@@ -39,7 +39,7 @@ const startProfessionalGame = () => {
   game.value.resetGame()
 }
 const onClickCustomSettings = () => {
-  is_custom.value = true
+  is_custom.value = !is_custom.value
   customSettings.value.height = customSettings.value.height
     ? customSettings.value.height
     : settings.value.height

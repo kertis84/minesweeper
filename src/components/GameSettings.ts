@@ -1,4 +1,4 @@
-export const scales = [12, 18, 24, 36, 48, 60, 72]
+export const scales = [12, 18, 24, 30, 36, 48, 60, 72]
 
 export default class GameSettings {
     width = 9
