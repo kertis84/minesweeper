@@ -4,7 +4,7 @@
 
 **[Ссылка на проект](https://classic-minesweeper-game.netlify.app/)**
 
-![alt text](https://github.com/kertis84/minesweeper/blob/main/LICENSE/minesweeper.jpg?raw=true)
+![screenshot](https://github.com/kertis84/minesweeper/blob/main/minesweeper.jpg?raw=true)
 
 ---
 
