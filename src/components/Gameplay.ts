@@ -46,7 +46,6 @@ export default class Gameplay {
             row.forEach((cell) => {
                 if (cell.value === 10 && !cell.flagged) {
                     cell.opened = true
-                    cell.flagged = false
                 } else if (cell.value !== 10 && cell.flagged) {
                     cell.value = 11
                     cell.opened = true

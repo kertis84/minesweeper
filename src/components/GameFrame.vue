@@ -166,7 +166,7 @@ const faceShocked = ref(false)
   </div>
 </template>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   z-index: 1;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Gameplay from './components/Gameplay';
+import Gameplay from './components/Gameplay'
 import GameFrame from './components/GameFrame.vue'
 import GameSettings, { scales, type FieldSettings, Config } from './components/GameSettings'
 
@@ -10,29 +10,22 @@ const isCustom = ref(false)
 const customSettings = ref({} as FieldSettings)
 
 const startNewGame = (e: Event) => {
-  const target = e.target as HTMLDivElement
   isCustom.value = false
-  settings.value.fieldConfig = {...Config[target.id as keyof typeof Config]}
+  const target = e.target as HTMLDivElement
+  settings.value.fieldConfig = { ...Config[target.id as keyof typeof Config] }
   game.value.resetGame()
 }
 
 const onClickCustomSettings = () => {
   isCustom.value = !isCustom.value
-  customSettings.value.height = customSettings.value.height
-    ? customSettings.value.height
-    : settings.value.fieldConfig.height
-  customSettings.value.width = customSettings.value.width
-    ? customSettings.value.width
-    : settings.value.fieldConfig.width
-  customSettings.value.mines = customSettings.value.mines
-    ? customSettings.value.mines
-    : settings.value.fieldConfig.mines
-    startNewCustomGame()
+  customSettings.value = settings.value.fieldConfig
 }
+
 const startNewCustomGame = () => {
   settings.value.fieldConfig = customSettings.value
   game.value.resetGame()
 }
+
 const onChangeCustomSettings = (e: Event) => {
   const target = e.target as HTMLInputElement
   // normalize custom settings to [7 <= height, width <= 70] and [5 <= mines <= 1/2 game area]
@@ -46,7 +39,6 @@ const onChangeCustomSettings = (e: Event) => {
   customSettings.value = { ...customSettings.value, [target.id]: value }
   target.value = value.toString()
 }
-
 </script>
 
 <template>
@@ -95,7 +87,7 @@ const onChangeCustomSettings = (e: Event) => {
     <button class="btn ml-2" @click="startNewCustomGame">Применить</button>
   </div>
 
-  <GameFrame :game="game" :settings="settings"/>
+  <GameFrame :game="game" :settings="settings" />
 
   <div class="copyright">
     <a href="https://github.com/kertis84/minesweeper/blob/main/LICENSE" title="MIT License"
@@ -172,9 +164,6 @@ const onChangeCustomSettings = (e: Event) => {
 }
 .ml-2 {
   margin-left: 1rem;
-}
-.mr-2 {
-  margin-right: 1rem;
 }
 .mx-auto {
   margin-left: auto;
