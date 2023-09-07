@@ -30,8 +30,8 @@ export default class Gameplay {
             this.gameState = GameState.run
         if (!this.matrix[y][x].flagged && !this.matrix[y][x].opened) {
             this.openEmptyArea(x, y)
-            if (this.matrix[y][x].value === 10) {
-                this.matrix[y][x].value = 9
+            if (this.matrix[y][x].isMine()) {
+                this.matrix[y][x].setRedMine()
                 this.gameIsLost()
             }
             else if (this.countClosedCells() === this.settings.fieldConfig.mines) {
@@ -44,10 +44,10 @@ export default class Gameplay {
         this.gameState = GameState.lose
         this.matrix.forEach((row) => {
             row.forEach((cell) => {
-                if (cell.value === 10 && !cell.flagged) {
+                if (cell.isMine() && !cell.flagged) {
                     cell.opened = true
-                } else if (cell.value !== 10 && cell.flagged) {
-                    cell.value = 11
+                } else if (!cell.isMine() && cell.flagged) {
+                    cell.setWrongMine()
                     cell.opened = true
                     cell.flagged = false
                 }
@@ -59,7 +59,7 @@ export default class Gameplay {
         this.gameState = GameState.win
         this.flags = 0
         this.matrix.forEach((row) => {
-            row.forEach((cell) => cell.value === 10 && (cell.flagged = true))
+            row.forEach((cell) => cell.isMine() && (cell.flagged = true))
         })
     }
 
@@ -91,7 +91,7 @@ export default class Gameplay {
             this.flags++
         }
 
-        if (this.matrix[y][x].value === 0) {
+        if (this.matrix[y][x].isEmpty()) {
             this.walkAroundCell(x, y, (x0, y0) => !this.matrix[y0][x0].opened && this.openEmptyArea(x0, y0))
         }
     }
@@ -108,11 +108,9 @@ export default class Gameplay {
             const x = Math.floor(Math.random() * this.settings.fieldConfig.width)
             const y = Math.floor(Math.random() * this.settings.fieldConfig.height)
 
-            const cell = this.matrix[y][x]
-
-            if (cell.value < 10) {
-                this.matrix[y][x].value = 10
-                this.walkAroundCell(x, y, (x0, y0) => this.matrix[y0][x0].value < 10 && this.matrix[y0][x0].value++)
+            if (!this.matrix[y][x].isMine()) {
+                this.matrix[y][x].setMine()
+                this.walkAroundCell(x, y, (x0, y0) => this.matrix[y0][x0].increment())
                 count--
             }
         }

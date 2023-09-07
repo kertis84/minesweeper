@@ -86,16 +86,16 @@ const emit = defineEmits<{
   background-image: url(/resources/type8.svg);
   background-size: 100% 100%;
 }
-.cell-9 {
+.cell-mine-red {
   float: left;
   background-image: url(/resources/mine_red.svg);
   background-size: 100% 100%;
-}.cell-10 {
+}.cell-mine {
   float: left;
   background-image: url(/resources/mine.svg);
   background-size: 100% 100%;
 }
-.cell-11 {
+.cell-mine-wrong {
   float: left;
   background-image: url(/resources/mine_wrong.svg);
   background-size: 100% 100%;
