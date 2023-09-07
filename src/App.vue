@@ -42,7 +42,7 @@ const onChangeCustomSettings = (e: Event) => {
 </script>
 
 <template>
-  <div class="my-3 mx-auto menu">
+  <div class="my-3 mx-auto menu-container">
     <div class="mx-2 menu-item my-auto" id="beginner" @click="startNewGame">Новичок</div>
     <div class="mx-2 menu-item my-auto" id="intermediate" @click="startNewGame">Любитель</div>
     <div class="mx-2 menu-item my-auto" id="expert" @click="startNewGame">Профессионал</div>
@@ -111,7 +111,7 @@ const onChangeCustomSettings = (e: Event) => {
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
-.menu {
+.menu-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
