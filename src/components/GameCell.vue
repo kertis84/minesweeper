@@ -21,7 +21,7 @@ const emit = defineEmits<{
 
 <template>
   <div
-    :style="{ width: props.settings.cell_size + 'px', height: props.settings.cell_size + 'px' }"
+    :style="{ width: props.settings.cellSize + 'px', height: props.settings.cellSize + 'px' }"
     :class="cell.flagged ? 'cell-flag' : cell.opened ? `cell-${cell.value}` : 'cell-closed'"
     @click.prevent="!props.cell.opened && emit('onClickCell', x, y)"
     @contextmenu.prevent="!props.cell.opened && emit('onRightClickCell', x, y)"

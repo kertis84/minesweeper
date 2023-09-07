@@ -7,7 +7,7 @@ interface Props {
   state: GameState
   flags: number
   settings: GameSettings
-  face_shocked: boolean
+  faceShocked: boolean
 }
 
 const props = defineProps<Props>()
@@ -16,7 +16,7 @@ let intervalId: number
 
 const emit = defineEmits<{ (e: 'onClickResetGame'): void }>()
 
-const pressed = ref(false)
+const facePressed = ref(false)
 const timer = ref(0)
 const isStarted = computed(() => {
   return props.state === GameState.run
@@ -56,90 +56,90 @@ const onClickResetGame = () => {
   <div
     class="nums-background-left"
     :style="{
-      width: props.settings.cell_size * 1.625 * 1.625 + 'px',
-      height: props.settings.cell_size * 1.625 + 'px',
-      marginLeft: props.settings.cell_size * 0.2 + 'px'
+      width: props.settings.cellSize * 1.625 * 1.625 + 'px',
+      height: props.settings.cellSize * 1.625 + 'px',
+      marginLeft: props.settings.cellSize * 0.2 + 'px'
     }"
   >
     <div
       class="digit"
       :class="`d${leftNums[0]}`"
       :style="{
-        width: props.settings.cell_size * 0.75 + 'px',
-        height: props.settings.cell_size * 1.35 + 'px',
-        marginRight: props.settings.cell_size * 0.12 + 'px'
+        width: props.settings.cellSize * 0.75 + 'px',
+        height: props.settings.cellSize * 1.35 + 'px',
+        marginRight: props.settings.cellSize * 0.12 + 'px'
       }"
     ></div>
     <div
       class="digit"
       :class="leftNums[1] && `d${leftNums[1]}`"
       :style="{
-        width: props.settings.cell_size * 0.75 + 'px',
-        height: props.settings.cell_size * 1.35 + 'px',
-        marginRight: props.settings.cell_size * 0.075 + 'px'
+        width: props.settings.cellSize * 0.75 + 'px',
+        height: props.settings.cellSize * 1.35 + 'px',
+        marginRight: props.settings.cellSize * 0.075 + 'px'
       }"
     ></div>
     <div
       class="digit"
       :class="leftNums[2] && `d${leftNums[2]}`"
       :style="{
-        width: props.settings.cell_size * 0.75 + 'px',
-        height: props.settings.cell_size * 1.35 + 'px',
-        marginRight: props.settings.cell_size * 0.075 + 'px'
+        width: props.settings.cellSize * 0.75 + 'px',
+        height: props.settings.cellSize * 1.35 + 'px',
+        marginRight: props.settings.cellSize * 0.075 + 'px'
       }"
     ></div>
   </div>
   <div
     class="nums-background-right"
     :style="{
-      width: props.settings.cell_size * 1.625 * 1.625 + 'px',
-      height: props.settings.cell_size * 1.625 + 'px',
-      marginRight: props.settings.cell_size * 0.2 + 'px'
+      width: props.settings.cellSize * 1.625 * 1.625 + 'px',
+      height: props.settings.cellSize * 1.625 + 'px',
+      marginRight: props.settings.cellSize * 0.2 + 'px'
     }"
   >
     <div
       class="digit"
       :class="`d${rightNums[0]}`"
       :style="{
-        width: props.settings.cell_size * 0.75 + 'px',
-        height: props.settings.cell_size * 1.35 + 'px',
-        marginRight: props.settings.cell_size * 0.12 + 'px'
+        width: props.settings.cellSize * 0.75 + 'px',
+        height: props.settings.cellSize * 1.35 + 'px',
+        marginRight: props.settings.cellSize * 0.12 + 'px'
       }"
     ></div>
     <div
       class="digit"
       :class="rightNums[1] && `d${rightNums[1]}`"
       :style="{
-        width: props.settings.cell_size * 0.75 + 'px',
-        height: props.settings.cell_size * 1.35 + 'px',
-        marginRight: props.settings.cell_size * 0.075 + 'px'
+        width: props.settings.cellSize * 0.75 + 'px',
+        height: props.settings.cellSize * 1.35 + 'px',
+        marginRight: props.settings.cellSize * 0.075 + 'px'
       }"
     ></div>
     <div
       class="digit"
       :class="rightNums[2] && `d${rightNums[2]}`"
       :style="{
-        width: props.settings.cell_size * 0.75 + 'px',
-        height: props.settings.cell_size * 1.35 + 'px',
-        marginRight: props.settings.cell_size * 0.075 + 'px'
+        width: props.settings.cellSize * 0.75 + 'px',
+        height: props.settings.cellSize * 1.35 + 'px',
+        marginRight: props.settings.cellSize * 0.075 + 'px'
       }"
     ></div>
   </div>
   <div
-    @mousedown="pressed = true"
-    @mouseup="pressed = false"
+    @mousedown="facePressed = true"
+    @mouseup="facePressed = false"
     @click.prevent="onClickResetGame"
     :style="{
-      width: props.settings.cell_size * 1.625 + 'px',
-      height: props.settings.cell_size * 1.625 + 'px'
+      width: props.settings.cellSize * 1.625 + 'px',
+      height: props.settings.cellSize * 1.625 + 'px'
     }"
     class="center"
     :class="{
-      face_pressed: pressed,
-      face_shocked: face_shocked && (state === GameState.run || state === GameState.ready),
-      face_unpressed: !pressed && !face_shocked && (state === GameState.ready || state === GameState.run),
-      face_lose: !pressed && state === GameState.lose,
-      face_win: !pressed && state === GameState.win
+      face_facePressed: facePressed,
+      face_shocked: faceShocked && (state === GameState.run || state === GameState.ready),
+      face_unfacePressed: !facePressed && !faceShocked && (state === GameState.ready || state === GameState.run),
+      face_lose: !facePressed && state === GameState.lose,
+      face_win: !facePressed && state === GameState.win
     }"
   ></div>
 </template>
@@ -155,11 +155,11 @@ const onClickResetGame = () => {
   background-image: url(/resources/face_shocked.svg);
   background-size: 100% 100%;
 }
-.face_unpressed {
+.face_unfacePressed {
   background-image: url(/resources/face_unpressed.svg);
   background-size: 100% 100%;
 }
-.face_pressed {
+.face_facePressed {
   background-image: url(/resources/face_pressed.svg);
   background-size: 100% 100%;
 }
