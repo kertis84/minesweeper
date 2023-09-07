@@ -42,14 +42,11 @@ const onChangeCustomSettings = (e: Event) => {
 </script>
 
 <template>
-  <div
-    class="my-3 mx-auto"
-    style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem"
-  >
-    <div class="mx-2 menu my-auto" id="beginner" @click="startNewGame">Новичок</div>
-    <div class="mx-2 menu my-auto" id="intermediate" @click="startNewGame">Любитель</div>
-    <div class="mx-2 menu my-auto" id="expert" @click="startNewGame">Профессионал</div>
-    <div class="mx-2 menu my-auto" @click="onClickCustomSettings">Настроить</div>
+  <div class="my-3 mx-auto menu">
+    <div class="mx-2 menu-item my-auto" id="beginner" @click="startNewGame">Новичок</div>
+    <div class="mx-2 menu-item my-auto" id="intermediate" @click="startNewGame">Любитель</div>
+    <div class="mx-2 menu-item my-auto" id="expert" @click="startNewGame">Профессионал</div>
+    <div class="mx-2 menu-item my-auto" @click="onClickCustomSettings">Настроить</div>
     <div class="mx-2 my-auto">
       <select class="scale" v-model="settings.cellSize">
         <option v-for="scale in scales" :key="scale" :value="scale">{{ scale }} px</option>
@@ -115,6 +112,12 @@ const onChangeCustomSettings = (e: Event) => {
     box-shadow 0.15s ease-in-out;
 }
 .menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem
+}
+.menu-item {
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
   font-weight: 600;
