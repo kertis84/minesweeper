@@ -1,8 +1,10 @@
-# minesweeper
+# Classic minesweeper game
 
-Классический вариант игры Сапер
+Классический Сапер из Windows XP
 
 **[Ссылка на проект](https://classic-minesweeper-game.netlify.app/)**
+
+![alt text](https://github.com/kertis84/minesweeper/blob/main/LICENSE/minesweeper.jpg?raw=true)
 
 ---
 
