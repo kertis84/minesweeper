@@ -6,7 +6,7 @@ export interface FieldSettings {
     mines: number,
 }
   
-export const Config = {
+export const Config = Object.freeze({
     beginner: {
         height: 9,
         width: 9,
@@ -22,7 +22,7 @@ export const Config = {
         width: 30,
         mines: 99,
     },
-};
+});
 
 export default class GameSettings {
     fieldConfig = {...Config.beginner}
